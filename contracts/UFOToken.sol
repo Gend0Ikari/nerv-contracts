@@ -2,8 +2,8 @@ pragma solidity 0.6.12;
 
 import "./libs/BEP20.sol";
 
-// UFOToken with Governance.
-contract UFOToken is BEP20('UFO', 'UFO') {
+// NERVToken with Governance.
+contract NERVToken is BEP20('NERV', 'NERV') {
     /// @notice Creates `_amount` token to `_to`. Must only be called by the owner (MasterChef).
     function mint(address _to, uint256 _amount) public onlyOwner {
         _mint(_to, _amount);
@@ -112,9 +112,9 @@ contract UFOToken is BEP20('UFO', 'UFO') {
         );
 
         address signatory = ecrecover(digest, v, r, s);
-        require(signatory != address(0), "UFO::delegateBySig: invalid signature");
-        require(nonce == nonces[signatory]++, "UFO::delegateBySig: invalid nonce");
-        require(now <= expiry, "UFO::delegateBySig: signature expired");
+        require(signatory != address(0), "NERV::delegateBySig: invalid signature");
+        require(nonce == nonces[signatory]++, "NERV::delegateBySig: invalid nonce");
+        require(now <= expiry, "NERV::delegateBySig: signature expired");
         return _delegate(signatory, delegatee);
     }
 
@@ -144,7 +144,7 @@ contract UFOToken is BEP20('UFO', 'UFO') {
         view
         returns (uint256)
     {
-        require(blockNumber < block.number, "UFO::getPriorVotes: not yet determined");
+        require(blockNumber < block.number, "NERV::getPriorVotes: not yet determined");
 
         uint32 nCheckpoints = numCheckpoints[account];
         if (nCheckpoints == 0) {
