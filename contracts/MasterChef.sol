@@ -46,13 +46,13 @@ contract MasterChef is Ownable {
         uint16 depositFeeBP;      // Deposit fee in basis points
     }
 
-    // The UFO TOKEN!
-    UFOToken public ufo;
+    // The NERV TOKEN!
+    NERVToken public nerv;
     // Dev address.
     address public devaddr;
-    // UFO tokens created per block.
-    uint256 public ufoPerBlock;
-    // Bonus muliplier for early ufo makers.
+    // NERV tokens created per block.
+    uint256 public nervPerBlock;
+    // Bonus muliplier for early nerv makers.
     uint256 public constant BONUS_MULTIPLIER = 1;
     // Deposit Fee address
     address public feeAddress;
@@ -156,7 +156,7 @@ contract MasterChef is Ownable {
             return;
         }
         uint256 multiplier = getMultiplier(pool.lastRewardBlock, block.number);
-        uint256 ufoReward = multiplier.mul(nervPerBlock).mul(pool.allocPoint).div(totalAllocPoint);
+        uint256 nervReward = multiplier.mul(nervPerBlock).mul(pool.allocPoint).div(totalAllocPoint);
         nerv.mint(devaddr, nervReward.div(10));
         nerv.mint(address(this), nervReward);
         pool.accNERVPerShare = pool.accNERVPerShare.add(nervReward.mul(1e12).div(lpSupply));
@@ -171,7 +171,7 @@ contract MasterChef is Ownable {
         if (user.amount > 0) {
             uint256 pending = user.amount.mul(pool.accNERVPerShare).div(1e12).sub(user.rewardDebt);
             if(pending > 0) {
-                safeUFOTransfer(msg.sender, pending);
+                safeNERVTransfer(msg.sender, pending);
             }
         }
         if(_amount > 0) {
@@ -217,7 +217,7 @@ contract MasterChef is Ownable {
         emit EmergencyWithdraw(msg.sender, _pid, amount);
     }
 
-    // Safe ufo transfer function, just in case if rounding error causes pool to not have enough NERVs.
+    // Safe nerv transfer function, just in case if rounding error causes pool to not have enough NERVs.
     function safeNERVTransfer(address _to, uint256 _amount) internal {
         uint256 nervBal = nerv.balanceOf(address(this));
         if (_amount > nervBal) {
