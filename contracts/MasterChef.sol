@@ -42,7 +42,7 @@ contract MasterChef is Ownable {
         IBEP20 lpToken;           // Address of LP token contract.
         uint256 allocPoint;       // How many allocation points assigned to this pool. UFOs to distribute per block.
         uint256 lastRewardBlock;  // Last block number that UFOs distribution occurs.
-        uint256 accUFOPerShare;   // Accumulated UFOs per share, times 1e12. See below.
+        uint256 accNERVPerShare;   // Accumulated NERVs per share, times 1e12. See below.
         uint16 depositFeeBP;      // Deposit fee in basis points
     }
 
